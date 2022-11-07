@@ -5,7 +5,7 @@ provider "aws" {
 
 }
 
-# VARIABLES
+# Cluster
 resource "aws_ecs_cluster" "aws-ecs-cluster" {
   name = "urlapp-cluster"
   tags = {
@@ -21,7 +21,7 @@ resource "aws_cloudwatch_log_group" "log-group" {
   }
 }
 
-# VARIABLES
+# Task Definition
 
 resource "aws_ecs_task_definition" "aws-ecs-task" {
   family = "url-task"
@@ -57,7 +57,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
 
 }
 
-# VARIABLES
+# ECS Service
 resource "aws_ecs_service" "aws-ecs-service" {
   name                 = "url-ecs-service"
   cluster              = aws_ecs_cluster.aws-ecs-cluster.id
