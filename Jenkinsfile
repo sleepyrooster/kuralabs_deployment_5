@@ -34,7 +34,7 @@ pipeline {
          keepRunning{
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]){
              sh '''#!/bin/bash
-           docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
+           docker login -u -var="aws_access_key=$aws_access_key" -p -var="aws_secret_key=$aws_secret_key"
            docker pull python
            docker build -t urlshortener:v1 .
            docker tag urlshortener:v1 wemmanuel758/urlshortener:latest
