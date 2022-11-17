@@ -32,12 +32,15 @@ pipeline {
        agent{label 'awsDocker'}
        steps {
          keepRunning{
-            sh '''#!/bin/bash
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]){
+             sh '''#!/bin/bash
+           docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
            docker pull python
            docker build -t urlshortener:v1 .
            docker tag urlshortener:v1 wemmanuel758/urlshortener:latest
            docker push wemmanuel758/urlshortener
            '''
+          } 
          }
        }
      }
@@ -92,4 +95,3 @@ pipeline {
 
   }
  }
-
